@@ -5,8 +5,8 @@ namespace VRJam23
 {
     public class Plane : MonoBehaviour
     {
-        [SerializeField] private Transform u_LeftBuildingSpawn;
-        [SerializeField] private Transform u_RightBuildingSpawn;
+        [SerializeField] private GameObject u_LeftBuilding;
+        [SerializeField] private GameObject u_RightBuilding;
 
         private PlaneSpawner s_PlaneSpawner;
         private Transform u_SpawnerTransform;
@@ -14,14 +14,14 @@ namespace VRJam23
         private int pr_PlaneWidthDistance = 10;
         private int pr_MilliSecondDelay = 100;
 
-        public Transform LeftBuildingSpawn()
+        public GameObject LeftBuildingSpawn()
         {
-            return u_LeftBuildingSpawn;
+            return u_LeftBuilding;
         }
 
-        public Transform RightBuildingSpawn()
+        public GameObject RightBuildingSpawn()
         {
-            return u_RightBuildingSpawn;
+            return u_RightBuilding;
         }
 
         public void SpawnerTransformSet(Transform pa_SpawnerTransform, PlaneSpawner pa_PlaneSpawner)

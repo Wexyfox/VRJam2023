@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdb38f297989be4da98d1bccd0b2cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  u_LeftBuildingSpawn: {fileID: 6119517599038143804}
-  u_RightBuildingSpawn: {fileID: 4927673045274736127}
+  u_LeftBuilding: {fileID: 6644319726649377085}
+  u_RightBuilding: {fileID: 5207984765337618383}
 --- !u!114 &6080228639049156763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,8 +173,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4927673045274736127}
+  - component: {fileID: 7978763944816419178}
+  - component: {fileID: 5985035850195092392}
   m_Layer: 0
-  m_Name: RightBuildingSpawn
+  m_Name: RightBuilding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,6 +197,41 @@ Transform:
   m_Father: {fileID: 3148545831676850968}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: -90}
+--- !u!114 &7978763944816419178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5207984765337618383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bda3d2a24bff554cbd7c08adbe4d6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pr_AcceptedObjects: 
+  pr_ScoreBonus: 0
+--- !u!65 &5985035850195092392
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5207984765337618383}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8, y: 5, z: 1}
+  m_Center: {x: 0, y: 3, z: 0.5}
 --- !u!1 &6644319726649377085
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,8 +241,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6119517599038143804}
+  - component: {fileID: 6378615419383077424}
+  - component: {fileID: 4636935764440410151}
   m_Layer: 0
-  m_Name: LeftBuildingSpawn
+  m_Name: LeftBuilding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,6 +265,41 @@ Transform:
   m_Father: {fileID: 3148545831676850968}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
+--- !u!114 &6378615419383077424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644319726649377085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bda3d2a24bff554cbd7c08adbe4d6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pr_AcceptedObjects: 
+  pr_ScoreBonus: 0
+--- !u!65 &4636935764440410151
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644319726649377085}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8, y: 5, z: 1}
+  m_Center: {x: 0, y: 3, z: 0.5}
 --- !u!1 &6782109480600817021
 GameObject:
   m_ObjectHideFlags: 0

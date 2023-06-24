@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace VRJam23
@@ -20,30 +21,45 @@ namespace VRJam23
             u_LastPlaneTransform = u_FirstPlane;
         }
 
+        private ObjectRelationsSO.Relation pr_LeftRelation;
+        private ObjectRelationsSO.Relation pr_RightRelation;
+
+        private Vector3 pr_NewPostion;
+        private Quaternion pr_NewRotation;
+
         public void NextPlane()
-        {            
-            Vector3 l_NewPosition = new Vector3(
+        {
+            pr_NewPostion = new Vector3(
                 u_LastPlaneTransform.position.x,
                 u_LastPlaneTransform.position.y,
                 u_LastPlaneTransform.position.z - 10);
-            Quaternion l_NewRotation = u_LastPlaneTransform.rotation;
+            pr_NewRotation = u_LastPlaneTransform.rotation;
 
             pr_RandomIndex = Random.Range(0, pr_PlanePrefabArray.Length);
             GameObject l_NewPlane = Instantiate(
                 pr_PlanePrefabArray[pr_RandomIndex],
-                l_NewPosition,
-                l_NewRotation);
+                pr_NewPostion,
+                pr_NewRotation);
             u_LastPlaneTransform = l_NewPlane.GetComponent<Transform>();
 
             pr_RandomIndex = Random.Range(0, so_BuildingRelations.Relationships.Length);
-            GameObject l_LeftBuilding = so_BuildingRelations.Relationships[pr_RandomIndex].g_Environmental;
-            s_ProjectileSpawner.AddPrefabToSpawnStack(so_BuildingRelations.Relationships[pr_RandomIndex].g_Shootable);
+            pr_LeftRelation = so_BuildingRelations.Relationships[pr_RandomIndex];
+            s_ProjectileSpawner.AddPrefabToSpawnStack(pr_LeftRelation.g_Shootable);
 
             pr_RandomIndex = Random.Range(0, so_BuildingRelations.Relationships.Length);
-            GameObject l_RightBuilding = so_BuildingRelations.Relationships[pr_RandomIndex].g_Environmental;
-            s_ProjectileSpawner.AddPrefabToSpawnStack(so_BuildingRelations.Relationships[pr_RandomIndex].g_Shootable);
+            pr_RightRelation = so_BuildingRelations.Relationships[pr_RandomIndex];
+            s_ProjectileSpawner.AddPrefabToSpawnStack(pr_RightRelation.g_Shootable);
 
-            s_PlaneSetup.Setup(l_NewPlane, l_LeftBuilding, l_RightBuilding, gameObject.transform, this);
+            s_PlaneSetup.Setup(
+                l_NewPlane,
+                pr_LeftRelation.g_Environmental,
+                pr_LeftRelation.pu_ProjectileEnums,
+                pr_LeftRelation.pu_ScoreBonus,
+                pr_RightRelation.g_Environmental,
+                pr_RightRelation.pu_ProjectileEnums,
+                pr_RightRelation.pu_ScoreBonus,
+                gameObject.transform, 
+                this);
         }
     }
 }

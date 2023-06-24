@@ -283,4 +283,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c6e38272eda274d8ff09009c148a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pr_Name: Square
+  pr_ProjectileEnum: 3
+  pr_PointScore: 0
