@@ -7,21 +7,22 @@ namespace VRJam23
         [SerializeField] private Rigidbody u_Rigidbody;
 
         private bool pr_Moving = false;
-        private float pr_MovementDistance = 0.05f;
+        private float pr_BaseMovementSpeed = 0.05f;
+        private float pr_DifficultyScalar = 1f;
         private Vector3 pr_NewPosition;
 
         private void OnEnable()
         {
             GameEvents.GameStart += GameStart;
             GameEvents.GameEnded += GameEnded;
-            GameEvents.SpeedChange += SpeedChange;
+            GameEvents.DifficultyScalarChange += DifficultyScalarChange;
         }
 
         private void OnDisable()
         {
             GameEvents.GameStart -= GameStart;
             GameEvents.GameEnded -= GameEnded;
-            GameEvents.SpeedChange -= SpeedChange;
+            GameEvents.DifficultyScalarChange -= DifficultyScalarChange;
         }
 
         private void GameStart()
@@ -39,9 +40,9 @@ namespace VRJam23
             pr_Moving = true;
         }
 
-        private void SpeedChange(float pa_NewSpeed)
+        private void DifficultyScalarChange(float pa_NewDifficultyScalar)
         {
-            pr_MovementDistance = pa_NewSpeed;
+            pr_DifficultyScalar = pa_NewDifficultyScalar;
         }
 
         private void FixedUpdate()
@@ -49,7 +50,7 @@ namespace VRJam23
             if (!pr_Moving) return;
 
             pr_NewPosition = transform.position;
-            pr_NewPosition.z += pr_MovementDistance;
+            pr_NewPosition.z += pr_BaseMovementSpeed * pr_DifficultyScalar;
             u_Rigidbody.MovePosition(pr_NewPosition);
         }
     }

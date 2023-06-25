@@ -18,11 +18,12 @@ namespace VRJam23
 
         private void OnTriggerStay(Collider pa_Other)
         {
-            if (!pa_Other.GetComponent<Projectile>()) return;
             if (g_LoadedObject != null) return;
+            if (!pa_Other.GetComponent<Projectile>()) return;
 
             g_LoadedObject = pa_Other.gameObject;
             g_LoadedObject.GetComponent<XRGrabInteractable>().enabled = false;
+            g_LoadedObject.GetComponent<Projectile>().Load();
 
             u_LoadedRigidBody = g_LoadedObject.GetComponent<Rigidbody>();
             u_LoadedMeshCollider = g_LoadedObject.GetComponent<MeshCollider>();

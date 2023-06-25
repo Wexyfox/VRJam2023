@@ -7,14 +7,20 @@ namespace VRJam23
     {
         [SerializeField] private Rigidbody u_Rigidbody;
 
+        [Header("Attributes")]
         [SerializeField] private int pr_Health;
         [SerializeField] private EnemyTypeEnum pr_TypeEnum;
         [SerializeField] private EnemyStateEnum pr_StateEnum;
         [SerializeField] private float pr_MoveSpeedScalar;
+        [SerializeField] private Collider pr_TriggerCollider;
         [SerializeField] private PlaneMovement s_PlaneMovement;
         [SerializeField] private Transform pr_TargetPosition;
 
-        private float pr_DifficultyScalar = 1f;
+        private float pr_DistanceChecker = 0.2f;
+
+        private bool pr_SetupComplete = false;
+        private EnemySpawner s_EnemySpawner;
+        private float pr_DifficultyScalar;
         private Projectile s_Projectile;
 
         private int pr_RandomIndex;
@@ -24,22 +30,52 @@ namespace VRJam23
         private Transform[] pr_ClosePositions;
         private Transform pr_CatchingPosition;
 
+        [Header("Position Switch Delay")]
         [SerializeField] private int pr_PositionSwitchDelayLower;
         [SerializeField] private int pr_PositionSwitchDelayUpper;
         private int pr_PositionSwitchDelay;
 
+        [Header("Distance Switch Delay")]
         [SerializeField] private int pr_DistanceSwitchDelayLower;
         [SerializeField] private int pr_DistanceSwitchDelayUpper;
         private int pr_DistanceSwitchDelay;
+
+        private void OnEnable()
+        {
+            GameEvents.GameEnded += GameEnded;
+            GameEvents.DifficultyScalarChange += DifficultyScalarChange;
+        }
+
+        private void OnDisable()
+        {
+            GameEvents.GameEnded -= GameEnded;
+            GameEvents.DifficultyScalarChange -= DifficultyScalarChange;
+        }
+
+        private void GameEnded()
+        {
+            pr_SetupComplete = false;
+            u_Rigidbody.velocity = Vector3.zero;
+        }
+
+        private void DifficultyScalarChange(float pa_NewDifficultyScalar)
+        {
+            pr_DifficultyScalar = pa_NewDifficultyScalar;
+        }
 
         public void Setup(
             Transform pa_StartingPosition,
             Transform[] pa_FarPositions,
             Transform[] pa_MidPositions,
             Transform[] pa_ClosePositions,
-            Transform pa_CatchingPosition)
+            Transform pa_CatchingPosition,
+            EnemySpawner pa_EnemySpawner,
+            float pa_DifficultyScalar)
         {
+            s_EnemySpawner = pa_EnemySpawner;
             pr_StateEnum = EnemyStateEnum.ENTERING;
+
+            pr_DifficultyScalar = pa_DifficultyScalar;
 
             pr_StartingPosition = pa_StartingPosition;
             pr_FarPositions = pa_FarPositions;
@@ -48,6 +84,9 @@ namespace VRJam23
             pr_CatchingPosition = pa_CatchingPosition;
 
             pr_TargetPosition = pr_StartingPosition;
+            NewPositionLoop();
+            NewDistanceLoop();
+            pr_SetupComplete = true;
         }
 
         private void SelectNewTargetPosition()
@@ -75,14 +114,50 @@ namespace VRJam23
             }
         }
 
+        private async void NewPositionLoop()
+        {
+            while (pr_StateEnum != EnemyStateEnum.EXITING || pr_StateEnum != EnemyStateEnum.CATCHINGPLAYER)
+            {
+                pr_PositionSwitchDelay = Random.Range(pr_PositionSwitchDelayLower, pr_PositionSwitchDelayUpper);
+                int l_ModifiedDelay = Mathf.RoundToInt((float)pr_PositionSwitchDelay / pr_DifficultyScalar);
+                await Task.Delay(l_ModifiedDelay);
+
+                SelectNewTargetPosition();
+            }
+        }
+
+        private async void NewDistanceLoop()
+        {
+            while (pr_StateEnum != EnemyStateEnum.EXITING || pr_StateEnum != EnemyStateEnum.CATCHINGPLAYER)
+            {
+                pr_DistanceSwitchDelay = Random.Range(pr_DistanceSwitchDelayLower, pr_DistanceSwitchDelayUpper);
+                int l_ModifiedDelay = Mathf.RoundToInt((float)pr_DistanceSwitchDelay / pr_DifficultyScalar);
+                await Task.Delay(l_ModifiedDelay);
+
+                switch (pr_StateEnum)
+                {
+                    case EnemyStateEnum.CHASINGFAR:
+                        pr_StateEnum = EnemyStateEnum.CHASINGMID;
+                        break;
+                    case EnemyStateEnum.CHASINGMID:
+                        pr_StateEnum = EnemyStateEnum.CHASINGCLOSE;
+                        break;
+                    case EnemyStateEnum.CHASINGCLOSE:
+                        pr_StateEnum = EnemyStateEnum.CATCHINGPLAYER;
+                        break;
+                }
+            }
+        }
+
         private void OnTriggerEnter(Collider pa_Other)
         {
             if (pa_Other.gameObject.GetComponent<Projectile>() == null) return;
             s_Projectile = pa_Other.gameObject.GetComponent<Projectile>();
 
-            if (s_Projectile.ProjectileEnum() != ProjectileEnum.JUNK) return;
-
             s_Projectile.enabled = false;
+
+            if (!s_Projectile.BeenLoaded()) return;
+
             pr_Health -= 1;
             HealthCheck();
         }
@@ -90,24 +165,67 @@ namespace VRJam23
         private void HealthCheck()
         {
             if (pr_Health > 0) return;
+            pr_TargetPosition = null;
+            pr_TriggerCollider.enabled = false;
 
             pr_StateEnum = EnemyStateEnum.EXITING;
+            switch (pr_TypeEnum)
+            {
+                case EnemyTypeEnum.FLYING:
+                    s_EnemySpawner.FlyingEnemyDefeated();
+                    break;
+                case EnemyTypeEnum.GROUND:
+                    s_EnemySpawner.GroundEnemyDefeated();
+                    break;
+            }
+
+            u_Rigidbody.constraints = RigidbodyConstraints.None;
+            u_Rigidbody.drag = 1.5f;
+
+            u_Rigidbody.useGravity = true;
             s_PlaneMovement.StartMoving();
         }
 
         private void FixedUpdate()
         {
-            if (pr_StateEnum == EnemyStateEnum.EXITING) return;
+            if (!pr_SetupComplete) return;
 
-            if (pr_StateEnum == EnemyStateEnum.ENTERING && transform.position == pr_StartingPosition.position)
+            if (pr_TargetPosition == null) return;
+
+            if (pr_StateEnum == EnemyStateEnum.ENTERING &&
+                (transform.position - pr_StartingPosition.position).magnitude < pr_DistanceChecker)
             {
                 pr_StateEnum = EnemyStateEnum.CHASINGFAR;
                 SelectNewTargetPosition();
             }
 
-            if (transform.position == pr_TargetPosition.position) return;
+            if (pr_StateEnum == EnemyStateEnum.ENTERING)
+            {
+                u_Rigidbody.velocity = (
+                    pr_TargetPosition.position - transform.position).normalized 
+                    * pr_MoveSpeedScalar 
+                    * pr_DifficultyScalar 
+                    * 5f;
+                return;
+            }
 
-            u_Rigidbody.AddForce(pr_TargetPosition.position.normalized * pr_MoveSpeedScalar * pr_DifficultyScalar);
+            if (pr_StateEnum == EnemyStateEnum.EXITING) return;
+
+            if ((transform.position - pr_TargetPosition.position).magnitude < pr_DistanceChecker)
+            {
+                u_Rigidbody.velocity = Vector3.zero;
+                return;
+            } 
+
+            u_Rigidbody.velocity = (
+                    pr_TargetPosition.position - transform.position).normalized 
+                    * pr_MoveSpeedScalar 
+                    * pr_DifficultyScalar;
+        }
+
+        public EnemyTypeEnum Type()
+        {
+            return pr_TypeEnum;
         }
     }
 }

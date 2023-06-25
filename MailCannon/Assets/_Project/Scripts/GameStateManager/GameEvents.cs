@@ -16,16 +16,22 @@ namespace VRJam23
             GameEnded?.Invoke();
         }
 
-        public static event UnityAction<float> SpeedChange;
-        public static void InvokeSpeedChange(float pa_NewSpeed)
+        public static event UnityAction<float> DifficultyScalarChange;
+        public static void InvokeDifficultyScalarChange(float pa_NewDifficultyScalar)
         {
-            SpeedChange?.Invoke(pa_NewSpeed);
+            DifficultyScalarChange?.Invoke(pa_NewDifficultyScalar);
         }
 
         public static event UnityAction<int> ScoreChange;
         public static void InvokeScoreChange(int pa_ScoreChangeAmount)
         {
             ScoreChange?.Invoke(pa_ScoreChangeAmount);
+        }
+
+        public static event UnityAction Pothole;
+        public static void InvokePothole()
+        {
+            Pothole?.Invoke();
         }
     }
 }

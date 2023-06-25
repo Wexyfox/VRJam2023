@@ -23,7 +23,7 @@ namespace VRJam23
 
         private Rigidbody u_Rigidbody;
         private float pr_SpawnForceLower = 3f;
-        private float pr_SpawnForceUpper = 8f;
+        private float pr_SpawnForceUpper = 5f;
         private float pr_SpawnForce;
 
         private bool pr_SpawnLoopRun = false;
@@ -55,6 +55,7 @@ namespace VRJam23
 
         public void AddPrefabToSpawnStack(GameObject pa_ObjectPrefab)
         {
+            if (pa_ObjectPrefab == null) return;
             pr_SpawnStack.Add(pa_ObjectPrefab);
         }
 
@@ -82,7 +83,7 @@ namespace VRJam23
         private void Spawn()
         {
             pr_RandomIndex = Random.Range(0, pr_SpawnStack.Count);
-            pr_LeftSide = Random.Range(0, 2) % 2 == 0;
+            pr_LeftSide = Random.value > 0.5f;
 
             if (pr_LeftSide)
             {

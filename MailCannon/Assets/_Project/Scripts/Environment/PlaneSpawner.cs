@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace VRJam23
@@ -58,7 +57,7 @@ namespace VRJam23
                 pr_RightRelation.g_Environmental,
                 pr_RightRelation.pu_ProjectileEnums,
                 pr_RightRelation.pu_ScoreBonus,
-                gameObject.transform, 
+                gameObject.transform,
                 this);
         }
     }

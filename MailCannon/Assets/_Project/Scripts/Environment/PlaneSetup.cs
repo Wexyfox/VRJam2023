@@ -25,16 +25,21 @@ namespace VRJam23
             s_Plane = pa_Plane.GetComponent<Plane>();
             s_Plane.SpawnerTransformSet(pa_SpawnerTransform, pa_PlaneSpawner);
 
-            Instantiate(pa_LeftBuilding, s_Plane.LeftBuildingSpawn().transform);
-            Instantiate(pa_RightObject, s_Plane.RightBuildingSpawn().transform);
+            if (pa_LeftBuilding != null)
+            {
+                Instantiate(pa_LeftBuilding, s_Plane.LeftBuildingSpawn().transform);
+                s_LeftScoreZone = s_Plane.LeftBuildingSpawn().GetComponent<ScoreZone>();
+                s_LeftScoreZone.SetProjectileEnums(pa_LeftScoreZoneEnums);
+                s_LeftScoreZone.SetScoreBonus(pa_LeftScoreBonus);
+            }
 
-            s_LeftScoreZone = s_Plane.LeftBuildingSpawn().GetComponent<ScoreZone>();
-            s_LeftScoreZone.SetProjectileEnums(pa_LeftScoreZoneEnums);
-            s_LeftScoreZone.SetScoreBonus(pa_LeftScoreBonus);
-
-            s_RightScoreZone = s_Plane.RightBuildingSpawn().GetComponent<ScoreZone>();
-            s_RightScoreZone.SetProjectileEnums(pa_RightScoreZoneEnums);
-            s_RightScoreZone.SetScoreBonus(pa_RightScoreBonus);
+            if (pa_RightObject != null)
+            {
+                Instantiate(pa_RightObject, s_Plane.RightBuildingSpawn().transform);
+                s_RightScoreZone = s_Plane.RightBuildingSpawn().GetComponent<ScoreZone>();
+                s_RightScoreZone.SetProjectileEnums(pa_RightScoreZoneEnums);
+                s_RightScoreZone.SetScoreBonus(pa_RightScoreBonus);
+            }
 
             s_PlaneMovement = pa_Plane.GetComponent<PlaneMovement>();            
             s_PlaneMovement.StartMoving();
