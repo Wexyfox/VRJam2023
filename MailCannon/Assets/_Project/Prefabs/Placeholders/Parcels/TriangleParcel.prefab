@@ -284,4 +284,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pr_ProjectileEnum: 4
-  pr_PointScore: 0
+  pr_PointScore: 1

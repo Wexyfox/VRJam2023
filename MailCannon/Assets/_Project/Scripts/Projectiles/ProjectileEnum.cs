@@ -6,6 +6,7 @@ namespace VRJam23
         HEXAGON,
         PENTAGON,
         SQUARE,
-        TRIANGLE
+        TRIANGLE,
+        JUNK
     }
 }

@@ -7,6 +7,7 @@ namespace VRJam23
     {
         [SerializeField] private List<ProjectileEnum> pr_AcceptedObjects;
         [SerializeField] private int pr_ScoreBonus;
+        [SerializeField] private Collider pr_ScoreCollider;
 
         private Projectile s_Projectile;
 
@@ -25,12 +26,13 @@ namespace VRJam23
             if (pa_Other.gameObject.GetComponent<Projectile>() == null) return;
             s_Projectile = pa_Other.gameObject.GetComponent<Projectile>();
 
-            if (!pr_AcceptedObjects.Contains(s_Projectile.Name())) return;
+            if (!pr_AcceptedObjects.Contains(s_Projectile.ProjectileEnum())) return;
 
             int l_NewScore = s_Projectile.Score() + pr_ScoreBonus;
             GameEvents.InvokeScoreChange(l_NewScore);
 
             s_Projectile.enabled = false;
+            pr_ScoreCollider.enabled = false;
         }
     }
 }

@@ -211,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pr_AcceptedObjects: 
   pr_ScoreBonus: 0
+  pr_ScoreCollider: {fileID: 5985035850195092392}
 --- !u!65 &5985035850195092392
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -279,6 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pr_AcceptedObjects: 
   pr_ScoreBonus: 0
+  pr_ScoreCollider: {fileID: 4636935764440410151}
 --- !u!65 &4636935764440410151
 BoxCollider:
   m_ObjectHideFlags: 0
