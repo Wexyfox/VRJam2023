@@ -2,7 +2,11 @@ namespace VRJam23
 {
     public enum EnemyTypeEnum
     {
-        FLYING,
-        GROUND
+        POLICE,
+        CLOWN,
+        NINJA,
+        HELECOPTER,
+        UFO,
+        DRONE
     }
 }

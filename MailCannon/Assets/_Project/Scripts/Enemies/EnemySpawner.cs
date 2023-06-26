@@ -6,6 +6,7 @@ namespace VRJam23
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private EnemySetup s_EnemySetup;
+        [SerializeField] private QuipAudio s_QuipAudio;
 
         [Header("Enemies")]
         [SerializeField] private GameObject[] p_FlyingEnemies;
@@ -37,7 +38,7 @@ namespace VRJam23
 
         private GameObject p_NewSpawnedEnemy;
         private Enemy s_NewEnemy;
-        private EnemyTypeEnum s_NewEnemyEnum;
+        private EnemyElevationEnum s_NewEnemyElevationEnum;
         private Transform u_NewEnemyTransform;
         private bool pr_NewEnemyLeftSideSpawn;
 
@@ -85,14 +86,7 @@ namespace VRJam23
                 u_StorageInstantiationPosition.position,
                 u_StorageInstantiationPosition.rotation);
 
-            s_NewEnemy = p_NewSpawnedEnemy.GetComponent<Enemy>();
-            s_NewEnemyEnum = s_NewEnemy.Type();
-
-            u_NewEnemyTransform = p_NewSpawnedEnemy.transform;
-            pr_NewEnemyLeftSideSpawn = Random.value > 0.5f;
-
-            ChooseSpawnPosition(u_NewEnemyTransform, s_NewEnemyEnum, pr_NewEnemyLeftSideSpawn);
-            s_EnemySetup.Setup(p_NewSpawnedEnemy, this, pr_NewEnemyLeftSideSpawn, pr_DifficultyScalar);
+            GenericSpawnSetup();
         }
 
         private async void FlyingSpawn()
@@ -109,14 +103,7 @@ namespace VRJam23
                 u_StorageInstantiationPosition.position,
                 u_StorageInstantiationPosition.rotation);
 
-            s_NewEnemy = p_NewSpawnedEnemy.GetComponent<Enemy>();
-            s_NewEnemyEnum = s_NewEnemy.Type();
-
-            u_NewEnemyTransform = p_NewSpawnedEnemy.transform;
-            pr_NewEnemyLeftSideSpawn = Random.value > 0.5f;
-
-            ChooseSpawnPosition(u_NewEnemyTransform, s_NewEnemyEnum, pr_NewEnemyLeftSideSpawn);
-            s_EnemySetup.Setup(p_NewSpawnedEnemy, this, pr_NewEnemyLeftSideSpawn, pr_DifficultyScalar);
+            GenericSpawnSetup();
         }
 
         private async void GroundSpawn()
@@ -133,21 +120,27 @@ namespace VRJam23
                 u_StorageInstantiationPosition.position,
                 u_StorageInstantiationPosition.rotation);
 
+            GenericSpawnSetup();
+        }
+
+        private void GenericSpawnSetup()
+        {
             s_NewEnemy = p_NewSpawnedEnemy.GetComponent<Enemy>();
-            s_NewEnemyEnum = s_NewEnemy.Type();
+            s_NewEnemyElevationEnum = s_NewEnemy.Elevation();
 
             u_NewEnemyTransform = p_NewSpawnedEnemy.transform;
             pr_NewEnemyLeftSideSpawn = Random.value > 0.5f;
 
-            ChooseSpawnPosition(u_NewEnemyTransform, s_NewEnemyEnum, pr_NewEnemyLeftSideSpawn);
+            ChooseSpawnPosition(u_NewEnemyTransform, s_NewEnemyElevationEnum, pr_NewEnemyLeftSideSpawn);
             s_EnemySetup.Setup(p_NewSpawnedEnemy, this, pr_NewEnemyLeftSideSpawn, pr_DifficultyScalar);
+            s_QuipAudio.EnemyQuip(s_NewEnemy.Type());
         }
 
-        private void ChooseSpawnPosition(Transform pa_NewEnemyTransform, EnemyTypeEnum pa_EnemyType, bool pa_LeftSpawn)
+        private void ChooseSpawnPosition(Transform pa_NewEnemyTransform, EnemyElevationEnum pa_EnemyElevation, bool pa_LeftSpawn)
         {
-            switch (pa_EnemyType)
+            switch (pa_EnemyElevation)
             {
-                case EnemyTypeEnum.FLYING:
+                case EnemyElevationEnum.FLYING:
                     if (pa_LeftSpawn)
                     {
                         u_NewEnemyTransform.SetPositionAndRotation(
@@ -161,7 +154,7 @@ namespace VRJam23
                             u_FlyingRightSpawnPosition.rotation);
                     }
                     break;
-                case EnemyTypeEnum.GROUND:
+                case EnemyElevationEnum.GROUND:
                     if (pa_LeftSpawn)
                     {
                         u_NewEnemyTransform.SetPositionAndRotation(

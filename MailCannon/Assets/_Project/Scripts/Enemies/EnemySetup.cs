@@ -25,12 +25,12 @@ namespace VRJam23
         public void Setup(GameObject pa_NewEnemy, EnemySpawner pa_EnemySpawner, bool pa_LeftSpawn, float pa_DifficultyScalar)
         {
             s_Enemy = pa_NewEnemy.GetComponent<Enemy>();
-            switch (s_Enemy.Type())
+            switch (s_Enemy.Elevation())
             {
-                case EnemyTypeEnum.FLYING:
+                case EnemyElevationEnum.FLYING:
                     FlyingSetup(pa_EnemySpawner, pa_LeftSpawn, pa_DifficultyScalar);
                     break;
-                case EnemyTypeEnum.GROUND:
+                case EnemyElevationEnum.GROUND:
                     GroundSetup(pa_EnemySpawner, pa_LeftSpawn, pa_DifficultyScalar);
                     break;
             }

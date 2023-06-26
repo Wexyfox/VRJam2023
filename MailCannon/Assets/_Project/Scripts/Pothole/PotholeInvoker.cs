@@ -9,6 +9,8 @@ namespace VRJam23
         [SerializeField] private int pr_PotholeDelayUpper = 30000;
         [SerializeField] private int pr_PotholeDelay;
 
+        [SerializeField] private PotholeExplosion s_PotholeExplosion;
+
         private bool pr_PotholeLoop = false;
 
         private void OnEnable()
@@ -39,9 +41,13 @@ namespace VRJam23
             while (pr_PotholeLoop)
             {
                 pr_PotholeDelay = Random.Range(pr_PotholeDelayLower, pr_PotholeDelayUpper);
-                GameEvents.InvokePothole();
-
                 await Task.Delay(pr_PotholeDelay);
+
+                if (!pr_PotholeLoop)
+                {
+                    return;
+                }
+                s_PotholeExplosion.Explode();
             }
         }
     }

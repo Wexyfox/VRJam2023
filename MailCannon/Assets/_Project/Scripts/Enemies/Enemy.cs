@@ -9,10 +9,12 @@ namespace VRJam23
 
         [Header("Attributes")]
         [SerializeField] private int pr_Health;
-        [SerializeField] private EnemyTypeEnum pr_TypeEnum;
+        [SerializeField] private EnemyTypeEnum pr_EnemyTypeEnum;
+        [SerializeField] private EnemyElevationEnum pr_ElevationEnum;
         [SerializeField] private EnemyStateEnum pr_StateEnum;
         [SerializeField] private float pr_MoveSpeedScalar;
         [SerializeField] private Collider pr_TriggerCollider;
+        [SerializeField] private EnemyAudio s_EnemyAudio;
         [SerializeField] private PlaneMovement s_PlaneMovement;
         [SerializeField] private Transform pr_TargetPosition;
 
@@ -168,13 +170,15 @@ namespace VRJam23
             pr_TargetPosition = null;
             pr_TriggerCollider.enabled = false;
 
+            s_EnemyAudio.LoopStop();
+
             pr_StateEnum = EnemyStateEnum.EXITING;
-            switch (pr_TypeEnum)
+            switch (pr_ElevationEnum)
             {
-                case EnemyTypeEnum.FLYING:
+                case EnemyElevationEnum.FLYING:
                     s_EnemySpawner.FlyingEnemyDefeated();
                     break;
-                case EnemyTypeEnum.GROUND:
+                case EnemyElevationEnum.GROUND:
                     s_EnemySpawner.GroundEnemyDefeated();
                     break;
             }
@@ -183,7 +187,7 @@ namespace VRJam23
             u_Rigidbody.drag = 1.5f;
 
             u_Rigidbody.useGravity = true;
-            s_PlaneMovement.StartMoving();
+            s_PlaneMovement.StartMoving(pr_DifficultyScalar);
         }
 
         private void FixedUpdate()
@@ -223,9 +227,14 @@ namespace VRJam23
                     * pr_DifficultyScalar;
         }
 
+        public EnemyElevationEnum Elevation()
+        {
+            return pr_ElevationEnum;
+        }
+
         public EnemyTypeEnum Type()
         {
-            return pr_TypeEnum;
+            return pr_EnemyTypeEnum;
         }
     }
 }

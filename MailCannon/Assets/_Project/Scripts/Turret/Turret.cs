@@ -12,9 +12,14 @@ namespace VRJam23
         [Header("Shooting force")]
         [SerializeField] private float pr_ShootingForce = 5f;
 
+        [Header("Scripts")]
+        [SerializeField] private QuipAudio s_QuipAudio;
+
         private GameObject g_LoadedObject;
         private Rigidbody u_LoadedRigidBody;
         private MeshCollider u_LoadedMeshCollider;
+        private Projectile s_Projectile;
+        private ProjectileEnum pr_ProjectileEnum;
 
         private void OnTriggerStay(Collider pa_Other)
         {
@@ -23,7 +28,8 @@ namespace VRJam23
 
             g_LoadedObject = pa_Other.gameObject;
             g_LoadedObject.GetComponent<XRGrabInteractable>().enabled = false;
-            g_LoadedObject.GetComponent<Projectile>().Load();
+            s_Projectile = g_LoadedObject.GetComponent<Projectile>();
+            s_Projectile.Load();
 
             u_LoadedRigidBody = g_LoadedObject.GetComponent<Rigidbody>();
             u_LoadedMeshCollider = g_LoadedObject.GetComponent<MeshCollider>();
@@ -37,6 +43,9 @@ namespace VRJam23
         public void Shoot()
         {
             if (g_LoadedObject == null) return;
+
+            pr_ProjectileEnum = s_Projectile.ProjectileEnum();
+            s_QuipAudio.ProjectileQuip(pr_ProjectileEnum);
 
             g_LoadedObject.transform.SetPositionAndRotation(u_ShootingPoint.position, u_ShootingPoint.rotation);
             u_LoadedMeshCollider.enabled = true;

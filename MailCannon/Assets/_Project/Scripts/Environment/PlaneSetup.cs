@@ -5,6 +5,8 @@ namespace VRJam23
 {
     public class PlaneSetup : MonoBehaviour
     {
+        [SerializeField] private Difficulty s_Difficulty;
+
         private Plane s_Plane;
         private PlaneMovement s_PlaneMovement;
 
@@ -42,7 +44,7 @@ namespace VRJam23
             }
 
             s_PlaneMovement = pa_Plane.GetComponent<PlaneMovement>();            
-            s_PlaneMovement.StartMoving();
+            s_PlaneMovement.StartMoving(s_Difficulty.CurrentDifficulty());
         }
     }
 }

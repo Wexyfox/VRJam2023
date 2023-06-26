@@ -35,8 +35,9 @@ namespace VRJam23
             pr_Moving = false;
         }
 
-        public void StartMoving()
+        public void StartMoving(float pa_NewDifficultyScalar)
         {
+            pr_DifficultyScalar = pa_NewDifficultyScalar;
             pr_Moving = true;
         }
 

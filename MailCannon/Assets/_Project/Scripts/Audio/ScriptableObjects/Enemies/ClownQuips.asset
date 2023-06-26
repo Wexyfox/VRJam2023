@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80d90c2ce4c409f4a96fcb1694fce16e, type: 3}
+  m_Name: ClownQuips
+  m_EditorClassIdentifier: 
+  pu_EnemyTypeEnum: 1
+  pu_RelatedQuips:
+  - {fileID: 8300000, guid: f008cd560208e1b42a6701f3563f0ecd, type: 3}
+  - {fileID: 8300000, guid: bd31888dfaa2e9344a4a4b386afa048e, type: 3}

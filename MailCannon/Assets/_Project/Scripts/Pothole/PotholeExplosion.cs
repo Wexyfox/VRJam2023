@@ -13,40 +13,22 @@ namespace VRJam23
 
         private void OnEnable()
         {
-            GameEvents.Pothole += Pothole;
-        }
-
-        private void OnDisable()
-        {
-            GameEvents.Pothole -= Pothole;
-        }
-
-        private void Start()
-        {
             u_RigidBodyList = new List<Rigidbody>();
+            u_RigidBodyList.Clear();
         }
 
-        private void Pothole()
+        public void Explode()
         {
-            foreach (Rigidbody l_RigidBody in u_RigidBodyList)
+            Collider[] l_SurroundingObjects = Physics.OverlapSphere(transform.position, pr_ExplosionRadius);
+            
+            foreach (Collider l_Collider in l_SurroundingObjects)
             {
+                Projectile l_Projectile = l_Collider.gameObject.GetComponent<Projectile>();
+                if (l_Projectile == null) continue;
+
+                Rigidbody l_RigidBody = l_Collider.gameObject.GetComponent<Rigidbody>();
                 l_RigidBody.AddExplosionForce(pr_ExplosionForce, transform.position, pr_ExplosionRadius);
             }
-        }
-
-        private void OnTriggerEnter(Collider pa_Other)
-        {
-            if (!pa_Other.GetComponent<Projectile>()) return;
-            if (!pa_Other.GetComponent<Rigidbody>()) return;
-            u_RigidBodyList.Add(pa_Other.GetComponent<Rigidbody>());
-        }
-
-        private void OnTriggerExit(Collider pa_Other)
-        {
-            if (!pa_Other.GetComponent<Projectile>()) return;
-            if (u_RigidBodyList.Contains(pa_Other.GetComponent<Rigidbody>())) return;
-
-            u_RigidBodyList.Remove(pa_Other.GetComponent<Rigidbody>());
         }
     }
 }
