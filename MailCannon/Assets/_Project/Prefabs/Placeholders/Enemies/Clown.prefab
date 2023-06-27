@@ -187,13 +187,13 @@ MonoBehaviour:
   pr_EnemyTypeEnum: 1
   pr_ElevationEnum: 1
   pr_StateEnum: 0
-  pr_MoveSpeedScalar: 2.8
+  pr_MoveSpeedScalar: 1.8
   pr_TriggerCollider: {fileID: 2151796999797390291}
   s_EnemyAudio: {fileID: -5059868737783329853}
   s_PlaneMovement: {fileID: 5211837216207280973}
   pr_TargetPosition: {fileID: 0}
-  pr_PositionSwitchDelayLower: 500
-  pr_PositionSwitchDelayUpper: 1000
+  pr_PositionSwitchDelayLower: 700
+  pr_PositionSwitchDelayUpper: 1200
   pr_DistanceSwitchDelayLower: 10000
   pr_DistanceSwitchDelayUpper: 14000
 --- !u!114 &5211837216207280973

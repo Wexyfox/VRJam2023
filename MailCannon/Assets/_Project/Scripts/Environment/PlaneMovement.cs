@@ -7,7 +7,7 @@ namespace VRJam23
         [SerializeField] private Rigidbody u_Rigidbody;
 
         private bool pr_Moving = false;
-        private float pr_BaseMovementSpeed = 0.05f;
+        private float pr_BaseMovementSpeed = 0.1f;
         private float pr_DifficultyScalar = 1f;
         private Vector3 pr_NewPosition;
 
