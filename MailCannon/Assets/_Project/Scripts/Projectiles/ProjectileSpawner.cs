@@ -6,24 +6,23 @@ namespace VRJam23
 {
     public class ProjectileSpawner : MonoBehaviour
     {
-        [SerializeField] private Transform u_TransformSpawn1;
-        [SerializeField] private Transform u_TransformSpawn2;
+        [SerializeField] private Transform u_TransformSpawn;
 
         private List<GameObject> pr_SpawnStack;
+        private AudioSource u_AudioSource;
 
         private int pr_MillisecondDelayLower = 400;
         private int pr_MillisecondDelayUpper = 1100;
         private int pr_MillisecondDelay;
 
         private int pr_RandomIndex;
-        private bool pr_LeftSide;
 
         private Vector3 pr_SpawnPosition;
         private Quaternion pr_SpawnRotation;
 
         private Rigidbody u_Rigidbody;
-        private float pr_SpawnForceLower = 3f;
-        private float pr_SpawnForceUpper = 5f;
+        private float pr_SpawnForceLower = 1f;
+        private float pr_SpawnForceUpper = 2.3f;
         private float pr_SpawnForce;
 
         private bool pr_SpawnLoopRun = false;
@@ -42,6 +41,7 @@ namespace VRJam23
 
         private void GameStart()
         {
+            u_AudioSource = u_TransformSpawn.GetComponent<AudioSource>();
             pr_SpawnStack = new List<GameObject>();
             pr_SpawnLoopRun = true;
             SpawningLoop();
@@ -56,7 +56,12 @@ namespace VRJam23
         public void AddPrefabToSpawnStack(GameObject pa_ObjectPrefab)
         {
             if (pa_ObjectPrefab == null) return;
-            pr_SpawnStack.Add(pa_ObjectPrefab);
+
+            bool l_Add = Random.Range(0f, 1f) > 0.5f;
+            if (l_Add)
+            {
+                pr_SpawnStack.Add(pa_ObjectPrefab);
+            }
         }
 
         private async void SpawningLoop()
@@ -83,18 +88,8 @@ namespace VRJam23
         private void Spawn()
         {
             pr_RandomIndex = Random.Range(0, pr_SpawnStack.Count);
-            pr_LeftSide = Random.value > 0.5f;
-
-            if (pr_LeftSide)
-            {
-                pr_SpawnPosition = u_TransformSpawn1.position;
-                pr_SpawnRotation = u_TransformSpawn1.rotation;
-            }
-            else
-            {
-                pr_SpawnPosition = u_TransformSpawn2.position;
-                pr_SpawnRotation = u_TransformSpawn2.rotation;
-            }
+            pr_SpawnPosition = u_TransformSpawn.position;
+            u_AudioSource.Play();
 
             GameObject l_TempObject = Instantiate(pr_SpawnStack[pr_RandomIndex], pr_SpawnPosition, pr_SpawnRotation);
             pr_SpawnStack.RemoveAt(pr_RandomIndex);

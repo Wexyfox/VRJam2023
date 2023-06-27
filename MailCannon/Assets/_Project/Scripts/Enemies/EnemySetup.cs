@@ -22,16 +22,20 @@ namespace VRJam23
 
         private Enemy s_Enemy;
 
-        public void Setup(GameObject pa_NewEnemy, EnemySpawner pa_EnemySpawner, bool pa_LeftSpawn, float pa_DifficultyScalar)
+        public void Setup(
+            GameObject pa_NewEnemy, 
+            EnemySpawner pa_EnemySpawner, 
+            bool pa_LeftSpawn, 
+            float pa_DifficultyScalar)
         {
             s_Enemy = pa_NewEnemy.GetComponent<Enemy>();
             switch (s_Enemy.Elevation())
             {
                 case EnemyElevationEnum.FLYING:
-                    FlyingSetup(pa_EnemySpawner, pa_LeftSpawn, pa_DifficultyScalar);
+                    FlyingSetup( pa_EnemySpawner, pa_LeftSpawn, pa_DifficultyScalar);
                     break;
                 case EnemyElevationEnum.GROUND:
-                    GroundSetup(pa_EnemySpawner, pa_LeftSpawn, pa_DifficultyScalar);
+                    GroundSetup( pa_EnemySpawner, pa_LeftSpawn, pa_DifficultyScalar);
                     break;
             }
         }

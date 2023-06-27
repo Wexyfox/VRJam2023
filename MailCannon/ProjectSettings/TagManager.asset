@@ -17,11 +17,11 @@ TagManager:
   - Plane
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - TurretGrab
+  - Player
+  - Projectile
+  - ScoreZone
+  - Enemy
   - 
   - 
   - 

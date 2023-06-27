@@ -13,7 +13,7 @@ namespace VRJam23
         [SerializeField] private EnemyElevationEnum pr_ElevationEnum;
         [SerializeField] private EnemyStateEnum pr_StateEnum;
         [SerializeField] private float pr_MoveSpeedScalar;
-        [SerializeField] private Collider pr_TriggerCollider;
+        [SerializeField] private Collider[] pr_TriggerColliders;
         [SerializeField] private EnemyAudio s_EnemyAudio;
         [SerializeField] private PlaneMovement s_PlaneMovement;
         [SerializeField] private Transform pr_TargetPosition;
@@ -156,9 +156,8 @@ namespace VRJam23
             if (pa_Other.gameObject.GetComponent<Projectile>() == null) return;
             s_Projectile = pa_Other.gameObject.GetComponent<Projectile>();
 
-            s_Projectile.enabled = false;
-
             if (!s_Projectile.BeenLoaded()) return;
+            s_Projectile.enabled = false;
 
             pr_Health -= 1;
             HealthCheck();
@@ -168,11 +167,22 @@ namespace VRJam23
         {
             if (pr_Health > 0) return;
             pr_TargetPosition = null;
-            pr_TriggerCollider.enabled = false;
+
+            foreach (Collider l_Collider in pr_TriggerColliders)
+            {
+                l_Collider.enabled = false;
+            }
 
             s_EnemyAudio.LoopStop();
 
             pr_StateEnum = EnemyStateEnum.EXITING;
+
+            u_Rigidbody.constraints = RigidbodyConstraints.None;
+            u_Rigidbody.drag = 1.5f;
+
+            u_Rigidbody.useGravity = true;
+            s_PlaneMovement.StartMoving(pr_DifficultyScalar);
+
             switch (pr_ElevationEnum)
             {
                 case EnemyElevationEnum.FLYING:
@@ -182,12 +192,6 @@ namespace VRJam23
                     s_EnemySpawner.GroundEnemyDefeated();
                     break;
             }
-
-            u_Rigidbody.constraints = RigidbodyConstraints.None;
-            u_Rigidbody.drag = 1.5f;
-
-            u_Rigidbody.useGravity = true;
-            s_PlaneMovement.StartMoving(pr_DifficultyScalar);
         }
 
         private void FixedUpdate()
@@ -206,9 +210,9 @@ namespace VRJam23
             if (pr_StateEnum == EnemyStateEnum.ENTERING)
             {
                 u_Rigidbody.velocity = (
-                    pr_TargetPosition.position - transform.position).normalized 
-                    * pr_MoveSpeedScalar 
-                    * pr_DifficultyScalar 
+                    pr_TargetPosition.position - transform.position).normalized
+                    * pr_MoveSpeedScalar
+                    * pr_DifficultyScalar
                     * 5f;
                 return;
             }
@@ -219,11 +223,11 @@ namespace VRJam23
             {
                 u_Rigidbody.velocity = Vector3.zero;
                 return;
-            } 
+            }
 
             u_Rigidbody.velocity = (
-                    pr_TargetPosition.position - transform.position).normalized 
-                    * pr_MoveSpeedScalar 
+                    pr_TargetPosition.position - transform.position).normalized
+                    * pr_MoveSpeedScalar
                     * pr_DifficultyScalar;
         }
 

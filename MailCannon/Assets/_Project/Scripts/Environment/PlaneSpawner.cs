@@ -31,7 +31,7 @@ namespace VRJam23
             pr_NewPostion = new Vector3(
                 u_LastPlaneTransform.position.x,
                 u_LastPlaneTransform.position.y,
-                u_LastPlaneTransform.position.z - 10);
+                u_LastPlaneTransform.position.z - 20);
             pr_NewRotation = u_LastPlaneTransform.rotation;
 
             pr_RandomIndex = Random.Range(0, pr_PlanePrefabArray.Length);

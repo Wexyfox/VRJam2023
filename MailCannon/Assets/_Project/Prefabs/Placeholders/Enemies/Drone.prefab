@@ -83,7 +83,8 @@ MonoBehaviour:
   pr_ElevationEnum: 0
   pr_StateEnum: 0
   pr_MoveSpeedScalar: 1.6
-  pr_TriggerCollider: {fileID: 1148129100881977851}
+  pr_TriggerColliders:
+  - {fileID: 1148129100881977851}
   s_EnemyAudio: {fileID: -8449341871906112391}
   s_PlaneMovement: {fileID: 1600697910255668301}
   pr_TargetPosition: {fileID: 0}

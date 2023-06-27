@@ -22,18 +22,17 @@ namespace VRJam23
         private float pr_DifficultyScalar = 1f;
 
         private int pr_FlyingSpawnDelayLower = 20000;
-        private int pr_FlyingSpawnDelayUpper = 30000;
+        private int pr_FlyingSpawnDelayUpper = 35000;
         private int pr_FlyingSpawnDelay;
 
         private int pr_GroundSpawnDelayLower = 15000;
-        private int pr_GroundSpawnDelayUpper = 25000;
+        private int pr_GroundSpawnDelayUpper = 30000;
         private int pr_GroundSpawnDelay;
 
-        private int pr_FirstSpawnDelayLower = 30000;
-        private int pr_FirstSpawnDelayUpper = 40000;
+        private int pr_FirstSpawnDelayLower = 25000;
+        private int pr_FirstSpawnDelayUpper = 45000;
         private int pr_FirstSpawnDelay;
 
-        private bool pr_FirstSpawnedEnemyDefeated;
         private bool pr_SpawnActive;
 
         private GameObject p_NewSpawnedEnemy;
@@ -73,16 +72,27 @@ namespace VRJam23
 
         private void Setup()
         {
-            pr_FirstSpawnDelay = Random.Range(pr_FirstSpawnDelayLower, pr_FirstSpawnDelayUpper);
-            pr_FirstSpawnedEnemyDefeated = false;
+            
             FirstSpawn();
         }
 
         private async void FirstSpawn()
         {
+            pr_SpawnActive = true;
+
+            pr_FirstSpawnDelay = Random.Range(pr_FirstSpawnDelayLower, pr_FirstSpawnDelayUpper);
             await Task.Delay(pr_FirstSpawnDelay);
             p_NewSpawnedEnemy = Instantiate(
                 p_GroundEnemies[0],
+                u_StorageInstantiationPosition.position,
+                u_StorageInstantiationPosition.rotation);
+
+            GenericSpawnSetup();
+
+            pr_FirstSpawnDelay = Random.Range(pr_FirstSpawnDelayLower, pr_FirstSpawnDelayUpper);
+            await Task.Delay(pr_FirstSpawnDelay);
+            p_NewSpawnedEnemy = Instantiate(
+                p_FlyingEnemies[0],
                 u_StorageInstantiationPosition.position,
                 u_StorageInstantiationPosition.rotation);
 
@@ -92,6 +102,7 @@ namespace VRJam23
         private async void FlyingSpawn()
         {
             if (!pr_SpawnActive) return;
+            
             int l_UnmodifiedDelay = Random.Range(pr_FlyingSpawnDelayLower, pr_FlyingSpawnDelayUpper);
             pr_FlyingSpawnDelay = Mathf.RoundToInt(l_UnmodifiedDelay / pr_DifficultyScalar);
 
@@ -109,6 +120,7 @@ namespace VRJam23
         private async void GroundSpawn()
         {
             if (!pr_SpawnActive) return;
+            
             int l_UnmodifiedDelay = Random.Range(pr_GroundSpawnDelayLower, pr_GroundSpawnDelayUpper);
             pr_GroundSpawnDelay = Mathf.RoundToInt(l_UnmodifiedDelay / pr_DifficultyScalar);
 
@@ -134,6 +146,10 @@ namespace VRJam23
             ChooseSpawnPosition(u_NewEnemyTransform, s_NewEnemyElevationEnum, pr_NewEnemyLeftSideSpawn);
             s_EnemySetup.Setup(p_NewSpawnedEnemy, this, pr_NewEnemyLeftSideSpawn, pr_DifficultyScalar);
             s_QuipAudio.EnemyQuip(s_NewEnemy.Type());
+
+            p_NewSpawnedEnemy = null;
+            s_NewEnemy = null;
+            u_NewEnemyTransform = null;
         }
 
         private void ChooseSpawnPosition(Transform pa_NewEnemyTransform, EnemyElevationEnum pa_EnemyElevation, bool pa_LeftSpawn)
@@ -179,18 +195,6 @@ namespace VRJam23
         public void GroundEnemyDefeated()
         {
             GroundSpawn();
-            if (!pr_FirstSpawnedEnemyDefeated)
-            {
-                pr_FirstSpawnedEnemyDefeated = true;
-                pr_SpawnActive = true;
-                FlyingSpawn();
-                GroundSpawn();
-            }
-        }
-
-        public void SetDifficulty(float pa_NewDifficultyScalar)
-        {
-            pr_DifficultyScalar = pa_NewDifficultyScalar;
         }
     }
 }
