@@ -3,7 +3,7 @@ namespace VRJam23
     public enum EnemyTypeEnum
     {
         POLICE,
-        CLOWN,
+        MONSTERTRUCK,
         NINJA,
         HELECOPTER,
         UFO,

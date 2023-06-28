@@ -21,12 +21,12 @@ namespace VRJam23
 
         private float pr_DifficultyScalar = 1f;
 
-        private int pr_FlyingSpawnDelayLower = 20000;
-        private int pr_FlyingSpawnDelayUpper = 35000;
+        private int pr_FlyingSpawnDelayLower = 18000;
+        private int pr_FlyingSpawnDelayUpper = 25000;
         private int pr_FlyingSpawnDelay;
 
-        private int pr_GroundSpawnDelayLower = 15000;
-        private int pr_GroundSpawnDelayUpper = 30000;
+        private int pr_GroundSpawnDelayLower = 12000;
+        private int pr_GroundSpawnDelayUpper = 22000;
         private int pr_GroundSpawnDelay;
 
         private int pr_FirstSpawnDelayLower = 25000;

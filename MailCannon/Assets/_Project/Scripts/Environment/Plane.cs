@@ -11,7 +11,7 @@ namespace VRJam23
         private PlaneSpawner s_PlaneSpawner;
         private Transform u_SpawnerTransform;
 
-        private int pr_PlaneWidthDistance = 20;
+        private int pr_PlaneWidthDistance = 24;
         private int pr_MilliSecondDelay = 100;
 
         public GameObject LeftBuildingSpawn()

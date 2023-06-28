@@ -471,8 +471,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6675398086662758352}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.2, z: -0.8}
-  m_LocalScale: {x: 2.64, y: 2.64, z: 2.64}
+  m_LocalPosition: {x: 0, y: 0.1, z: -0.8}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1649544228089925341}
@@ -1000,11 +1000,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   u_Rigidbody: {fileID: 105464825539457195}
-  pr_Health: 2
+  pr_Health: 4
   pr_EnemyTypeEnum: 3
   pr_ElevationEnum: 0
   pr_StateEnum: 0
-  pr_MoveSpeedScalar: 1.4
+  pr_MoveSpeedScalar: 1.6
   pr_TriggerColliders:
   - {fileID: 9181245170808031971}
   - {fileID: 4160421240421512025}
@@ -1013,8 +1013,8 @@ MonoBehaviour:
   pr_TargetPosition: {fileID: 0}
   pr_PositionSwitchDelayLower: 1000
   pr_PositionSwitchDelayUpper: 1500
-  pr_DistanceSwitchDelayLower: 12000
-  pr_DistanceSwitchDelayUpper: 18000
+  pr_DistanceSwitchDelayLower: 8000
+  pr_DistanceSwitchDelayUpper: 14000
 --- !u!114 &1037406741442554204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1162,8 +1162,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.04, y: 1, z: 3}
-  m_Center: {x: 0, y: 0.55, z: 0}
+  m_Size: {x: 1.1, y: 1, z: 3}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!65 &9181245170808031971
 BoxCollider:
   m_ObjectHideFlags: 0
