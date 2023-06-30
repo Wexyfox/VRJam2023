@@ -8,6 +8,7 @@ namespace VRJam23
         [SerializeField] private Difficulty s_Difficulty;
         [SerializeField] private int pr_CurrentScore;
         [SerializeField] private TextMeshProUGUI u_ScoreLabel;
+        [SerializeField] private AudioSource u_ScoreSoundEffect;
 
         private void OnEnable()
         {
@@ -29,6 +30,7 @@ namespace VRJam23
             pr_CurrentScore += pa_ScoreChange;
             u_ScoreLabel.text = pr_CurrentScore.ToString();
             s_Difficulty.DifficultyIncreaseCheck(pa_ScoreChange);
+            u_ScoreSoundEffect.Play();
         }
     }
 }

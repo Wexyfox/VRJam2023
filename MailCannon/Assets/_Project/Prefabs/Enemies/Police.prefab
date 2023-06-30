@@ -188,7 +188,7 @@ MonoBehaviour:
   pr_EnemyTypeEnum: 0
   pr_ElevationEnum: 1
   pr_StateEnum: 0
-  pr_MoveSpeedScalar: 2.2
+  pr_MoveSpeedScalar: 1.7
   pr_TriggerColliders:
   - {fileID: 9083046228604612138}
   s_EnemyAudio: {fileID: 7023899674959618647}
@@ -223,7 +223,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -282,7 +282,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

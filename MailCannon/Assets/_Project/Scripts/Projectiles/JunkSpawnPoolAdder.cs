@@ -8,8 +8,8 @@ namespace VRJam23
         [SerializeField] private ProjectileSpawner s_ProjectileSpawner;
         [SerializeField] private GameObject[] p_JunkPrefabs;
 
-        private int pr_JunkAddDelayLower = 6000;
-        private int pr_JunkAddDelayUpper = 10000;
+        private int pr_JunkAddDelayLower = 4000;
+        private int pr_JunkAddDelayUpper = 8000;
         private int pr_JunkAddDelay;
 
         private int pr_RandomInt;

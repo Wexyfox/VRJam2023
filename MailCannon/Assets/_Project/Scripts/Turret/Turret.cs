@@ -15,6 +15,14 @@ namespace VRJam23
         [Header("Scripts")]
         [SerializeField] private QuipAudio s_QuipAudio;
 
+        [Header("Input Pipe")]
+        [SerializeField] private ParticleSystem u_ParticleSystem;
+        [SerializeField] private AudioSource u_SuctionAudioSource;
+        [SerializeField] private AudioSource u_LoadAudioSource;
+
+        [Header("Barrel")]
+        [SerializeField] private AudioSource u_ShootAudioSource;
+
         private GameObject g_LoadedObject;
         private XRGrabInteractable u_XRGrabInteractable;
         private Rigidbody u_LoadedRigidBody;
@@ -46,6 +54,10 @@ namespace VRJam23
             u_LoadedMeshCollider.enabled = false;
 
             g_LoadedObject.transform.SetPositionAndRotation(u_ObjectStorage.position, u_ObjectStorage.rotation);
+
+            u_ParticleSystem.Stop();
+            u_SuctionAudioSource.Stop();
+            u_LoadAudioSource.Play();
         }
 
         private void ResetValues()
@@ -69,6 +81,10 @@ namespace VRJam23
             u_LoadedRigidBody.velocity = u_ShootingPoint.forward * pr_ShootingForce;
 
             ResetValues();
+
+            u_ParticleSystem.Play();
+            u_SuctionAudioSource.Play();
+            u_ShootAudioSource.Play();
         }
     }
 }

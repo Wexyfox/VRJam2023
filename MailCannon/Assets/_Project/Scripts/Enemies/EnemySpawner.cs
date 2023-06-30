@@ -21,16 +21,16 @@ namespace VRJam23
 
         private float pr_DifficultyScalar = 1f;
 
-        private int pr_FlyingSpawnDelayLower = 18000;
-        private int pr_FlyingSpawnDelayUpper = 25000;
+        private int pr_FlyingSpawnDelayLower = 30000;
+        private int pr_FlyingSpawnDelayUpper = 50000;
         private int pr_FlyingSpawnDelay;
 
-        private int pr_GroundSpawnDelayLower = 12000;
-        private int pr_GroundSpawnDelayUpper = 22000;
+        private int pr_GroundSpawnDelayLower = 20000;
+        private int pr_GroundSpawnDelayUpper = 40000;
         private int pr_GroundSpawnDelay;
 
-        private int pr_FirstSpawnDelayLower = 25000;
-        private int pr_FirstSpawnDelayUpper = 45000;
+        private int pr_FirstSpawnDelayLower = 20000;
+        private int pr_FirstSpawnDelayUpper = 35000;
         private int pr_FirstSpawnDelay;
 
         private bool pr_SpawnActive;
@@ -89,7 +89,7 @@ namespace VRJam23
 
             GenericSpawnSetup();
 
-            pr_FirstSpawnDelay = Random.Range(pr_FirstSpawnDelayLower, pr_FirstSpawnDelayUpper);
+            pr_FirstSpawnDelay = Random.Range(pr_FirstSpawnDelayLower, pr_FirstSpawnDelayUpper) / 2;
             await Task.Delay(pr_FirstSpawnDelay);
             p_NewSpawnedEnemy = Instantiate(
                 p_FlyingEnemies[0],

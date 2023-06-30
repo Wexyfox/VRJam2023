@@ -16,30 +16,30 @@ MonoBehaviour:
   - pu_ProjectileEnums: 00000000
     g_Shootable: {fileID: 3632642012555925182, guid: 3ea6770dbf8d0b74a812cca42646457e,
       type: 3}
-    g_Environmental: {fileID: 8414576596623935163, guid: 8cbe32f3d7f83e04aab61e1f1ad3271d,
+    g_Environmental: {fileID: 5961310274417600256, guid: b13ee4c9bf9e2bf4bbb1778d583acbf7,
       type: 3}
     pu_ScoreBonus: 0
   - pu_ProjectileEnums: 01000000
     g_Shootable: {fileID: 3517890801947430096, guid: f66cdbff016d3d04a9936f7f1fc6043f,
       type: 3}
-    g_Environmental: {fileID: 8494054489719871138, guid: e48eeb9450b72304d8c43cc7eb0166e6,
+    g_Environmental: {fileID: 7400233757505279537, guid: b0fc47a1814184d4a83d6525f12de0ae,
       type: 3}
     pu_ScoreBonus: 0
   - pu_ProjectileEnums: 02000000
     g_Shootable: {fileID: 7018036515630894244, guid: 4309cbbe091792641a2abe26f5b7547b,
       type: 3}
-    g_Environmental: {fileID: 8282914559609173917, guid: 2945eb8058d5d1645be8d86598233997,
+    g_Environmental: {fileID: 2366949699183119233, guid: f3738ff626946d64193d3bf3f614fec1,
       type: 3}
     pu_ScoreBonus: 0
   - pu_ProjectileEnums: 03000000
     g_Shootable: {fileID: 152013442212444340, guid: 338c93f16f2dda24693c46ad094abf83,
       type: 3}
-    g_Environmental: {fileID: 2591818573710200230, guid: e0757bf5ef94bcf49a86c4219bc8dcad,
+    g_Environmental: {fileID: 7292810011114896649, guid: ef72d30dd0882c74bba42db2dca5316c,
       type: 3}
     pu_ScoreBonus: 0
   - pu_ProjectileEnums: 04000000
     g_Shootable: {fileID: 4239612505296031055, guid: 3d6cff099e539a748b8e2cb4be34f746,
       type: 3}
-    g_Environmental: {fileID: 4837395309025734962, guid: 560ef62efafb5d948af0df272295964c,
+    g_Environmental: {fileID: 4986527528755363557, guid: 83cd597e3ce3ed5428d3b6aadec0d751,
       type: 3}
     pu_ScoreBonus: 0

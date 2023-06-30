@@ -133,7 +133,7 @@ namespace VRJam23
             while (pr_StateEnum != EnemyStateEnum.EXITING || pr_StateEnum != EnemyStateEnum.CATCHINGPLAYER)
             {
                 pr_DistanceSwitchDelay = Random.Range(pr_DistanceSwitchDelayLower, pr_DistanceSwitchDelayUpper);
-                int l_ModifiedDelay = Mathf.RoundToInt((float)pr_DistanceSwitchDelay / pr_DifficultyScalar);
+                int l_ModifiedDelay = Mathf.RoundToInt((float)pr_DistanceSwitchDelay / (pr_DifficultyScalar * pr_DifficultyScalar));
                 await Task.Delay(l_ModifiedDelay);
 
                 switch (pr_StateEnum)
